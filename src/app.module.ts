@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 
+import { LoggerModule } from './shared/modules/logger/logger.module';
+
 @Module({
-  imports: [],
+  imports: [LoggerModule],
   controllers: [],
   providers: [],
 })
