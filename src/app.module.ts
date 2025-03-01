@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
 import { loadConfig } from './config/env';
+import { UserModule } from './modules/user/user.module';
 import { AllExceptionFilter } from './shared/filters/all-exception.filter';
 import { BadRequestExceptionFilter } from './shared/filters/bad-request.exception.filter';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { ResponseSerializerInterceptor } from './shared/interceptors/response-serializer.interceptor';
+import { JwtModule } from './shared/modules/jwt/jwt.module';
 import { LoggerModule } from './shared/modules/logger/logger.module';
+import { PrismaModule } from './shared/modules/prisma/prisma.module';
 import { CustomValidationPipe } from './shared/pipes/validation.pipe';
 
 @Module({
@@ -16,9 +20,14 @@ import { CustomValidationPipe } from './shared/pipes/validation.pipe';
       load: [loadConfig],
     }),
     LoggerModule,
+    JwtModule,
+    PrismaModule,
+
+    UserModule,
   ],
   controllers: [],
   providers: [
+    { provide: APP_GUARD, useClass: AuthGuard },
     { provide: APP_PIPE, useClass: CustomValidationPipe },
     { provide: APP_FILTER, useClass: AllExceptionFilter },
     { provide: APP_FILTER, useClass: BadRequestExceptionFilter },
