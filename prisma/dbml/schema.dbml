@@ -22,11 +22,10 @@ Table sessions {
   movieId String [not null]
   movie movies [not null]
   date DateTime [not null]
-  timeSlot String [not null]
   roomNumber Int [not null]
 
   indexes {
-    (date, timeSlot, roomNumber) [unique]
+    (date, roomNumber) [unique]
   }
 }
 

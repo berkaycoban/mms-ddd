@@ -1,8 +1,9 @@
-import { ISession } from './session.interface';
+import { Session } from '../entities/session.entity';
 
 export interface IMovie {
   id: string;
   name: string;
   ageRestriction: number;
-  sessions: ISession[];
+
+  sessions?: Session[];
 }

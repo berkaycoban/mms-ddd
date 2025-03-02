@@ -10,13 +10,10 @@ export class Session implements ISession {
   date: Date;
 
   @Expose()
-  timeSlot: string;
-
-  @Expose()
   roomNumber: number;
 
   @Expose()
-  movieId?: string;
+  movieId: string;
 
   constructor(data: ISession) {
     Object.assign(this, data);
@@ -24,7 +21,7 @@ export class Session implements ISession {
   }
 
   private validate() {
-    if (!this.date || !this.timeSlot || !this.roomNumber) {
+    if (!this.date || !this.roomNumber || !this.movieId) {
       throw new Error('Invalid session!');
     }
   }

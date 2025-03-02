@@ -1,4 +1,4 @@
-import { Expose, Type } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import {
   IsDate,
   IsEnum,
@@ -13,8 +13,7 @@ export class CreateSessionDTO {
   @Expose()
   @IsNotEmpty()
   @IsDate()
-  @Type(() => Date)
-  date: Date;
+  date: string;
 
   @Expose()
   @IsNotEmpty()

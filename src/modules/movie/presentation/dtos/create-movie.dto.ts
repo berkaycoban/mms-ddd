@@ -1,14 +1,5 @@
-import { Expose, Type } from 'class-transformer';
-import {
-  ArrayNotEmpty,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  Min,
-  ValidateNested,
-} from 'class-validator';
-
-import { CreateSessionDTO } from './create-session.dto';
+import { Expose } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
 
 export class CreateMovieDTO {
   @Expose()
@@ -21,10 +12,4 @@ export class CreateMovieDTO {
   @IsNotEmpty()
   @Min(0)
   ageRestriction: number;
-
-  @Expose()
-  @ArrayNotEmpty()
-  @ValidateNested({ each: true })
-  @Type(() => CreateSessionDTO)
-  sessions: CreateSessionDTO[];
 }

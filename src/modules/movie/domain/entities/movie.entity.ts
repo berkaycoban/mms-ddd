@@ -14,7 +14,7 @@ export class Movie implements IMovie {
   ageRestriction: number;
 
   @Expose()
-  sessions: Session[] = [];
+  sessions?: Session[];
 
   constructor(data: Omit<Movie, 'validate'>) {
     Object.assign(this, data);

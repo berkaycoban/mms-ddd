@@ -6,8 +6,7 @@ type MovieSession = {
   id: string;
   movieId: string;
   roomNumber: number;
-  date: string;
-  timeSlot: string;
+  date: Date;
 };
 
 export async function seed(prisma: PrismaClient) {
@@ -31,14 +30,12 @@ export async function seed(prisma: PrismaClient) {
           movieId: el?.movieId,
           roomNumber: el?.roomNumber,
           date: el?.date,
-          timeSlot: el?.timeSlot,
         },
         create: {
           id,
           movieId: el?.movieId,
           roomNumber: el?.roomNumber,
           date: el?.date,
-          timeSlot: el?.timeSlot,
         },
       });
       processedCount++;

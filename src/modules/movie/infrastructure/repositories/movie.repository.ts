@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '@/shared/modules/prisma/prisma.service';
+import { BasePagination } from '@/shared/types';
 
 import { Movie } from '../../domain/entities/movie.entity';
 import { Session } from '../../domain/entities/session.entity';
@@ -15,40 +17,76 @@ export class PrismaMovieRepository implements MovieRepository {
       data: {
         name: movie.name,
         ageRestriction: movie.ageRestriction,
-        Session: {
-          create: movie.sessions.map((session) => ({
-            date: session.date,
-            timeSlot: session.timeSlot,
-            roomNumber: session.roomNumber,
-          })),
-        },
-      },
-      include: {
-        Session: true,
       },
     });
 
-    const sessions = createdMovie.Session.map(
-      (session) => new Session(session),
-    ).filter((session) => session);
-
-    return new Movie({ ...createdMovie, sessions });
+    return new Movie({
+      id: createdMovie.id,
+      name: createdMovie.name,
+      ageRestriction: createdMovie.ageRestriction,
+    });
   }
 
-  async isSessionTaken({
-    date,
-    timeSlot,
-    roomNumber,
+  async getAll({
+    pagination,
   }: {
-    date: Date;
-    timeSlot: string;
-    roomNumber: number;
-  }) {
-    const session = await this.prisma.session.findFirst({
-      where: { date, timeSlot, roomNumber },
-    });
+    pagination: BasePagination;
+  }): Promise<{ totalCount: number; items: Movie[] }> {
+    const [totalCount, movies] = await Promise.all([
+      this.prisma.movie.count(),
+      this.prisma.movie.findMany({
+        skip: pagination.page * pagination.limit,
+        take: pagination.limit,
+      }),
+    ]);
 
-    return !!session;
+    const items: Movie[] = [];
+
+    for (const movie of movies) {
+      items.push(new Movie({ ...movie }));
+    }
+
+    return { items, totalCount };
+  }
+
+  async getAllAvailableMovies({
+    pagination,
+    filter,
+  }: {
+    pagination: BasePagination;
+    filter: { startDate: string; endDate: string };
+  }): Promise<{
+    totalCount: number;
+    items: Movie[];
+  }> {
+    const whereQuery: Prisma.MovieWhereInput = {
+      Session: {
+        some: { date: { gte: filter.startDate, lte: filter.endDate } },
+      },
+    };
+
+    const [totalCount, movies] = await Promise.all([
+      this.prisma.movie.count({
+        where: whereQuery,
+      }),
+      this.prisma.movie.findMany({
+        where: whereQuery,
+        skip: pagination.page * pagination.limit,
+        take: pagination.limit,
+        include: { Session: true },
+      }),
+    ]);
+
+    const items: Movie[] = [];
+
+    for (const movie of movies) {
+      const sessions = movie.Session.map((e) => new Session(e));
+      if (sessions.length > 0) {
+        items.push(new Movie({ ...movie, sessions }));
+      }
+    }
+
+    return { items, totalCount };
   }
 
   async getById(movieId: string): Promise<Movie | null> {
@@ -60,7 +98,7 @@ export class PrismaMovieRepository implements MovieRepository {
       return null;
     }
 
-    return new Movie({ ...movie, sessions: [] });
+    return new Movie(movie);
   }
 
   async updateById(movieId: string, movie: Movie): Promise<Movie> {
@@ -72,7 +110,7 @@ export class PrismaMovieRepository implements MovieRepository {
       },
     });
 
-    return new Movie({ ...updatedMovie, sessions: [] });
+    return new Movie(updatedMovie);
   }
 
   async deleteById(movieId: string): Promise<void> {
