@@ -10,7 +10,29 @@ Table users {
   role UserRole [not null, default: 'customer']
 }
 
+Table movies {
+  id String [pk]
+  name String [not null]
+  ageRestriction Int [not null]
+  Session sessions [not null]
+}
+
+Table sessions {
+  id String [pk]
+  movieId String [not null]
+  movie movies [not null]
+  date DateTime [not null]
+  timeSlot String [not null]
+  roomNumber Int [not null]
+
+  indexes {
+    (date, timeSlot, roomNumber) [unique]
+  }
+}
+
 Enum UserRole {
   manager
   customer
 }
+
+Ref: sessions.movieId > movies.id

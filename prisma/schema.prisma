@@ -27,3 +27,28 @@ model User {
 
   @@map("users")
 }
+
+model Movie {
+  id String @id @default(uuid())
+
+  name           String
+  ageRestriction Int
+
+  Session Session[]
+
+  @@map("movies")
+}
+
+model Session {
+  id String @id @default(uuid())
+
+  movieId String
+  movie   Movie  @relation(fields: [movieId], references: [id])
+
+  date       DateTime @db.Date
+  timeSlot   String
+  roomNumber Int
+
+  @@unique([date, timeSlot, roomNumber]) // for each room, date and time slot should be unique
+  @@map("sessions")
+}

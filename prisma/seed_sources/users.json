@@ -1,0 +1,16 @@
+[
+  {
+    "id": "fcc22f13-29b6-413b-9df2-fa4b79afc8e8",
+    "username": "berkaycoban",
+    "password": "$2b$10$mDdEWDmoMySVRCx43MCNGOKvJar6vaMV0Cf51MZBeFErMvsG8/Oj6",
+    "age": 25,
+    "role": "customer"
+  },
+  {
+    "id": "0a60bd42-c221-461c-9c2f-2f8d82d97984",
+    "username": "johndoe",
+    "password": "$2b$10$mDdEWDmoMySVRCx43MCNGOKvJar6vaMV0Cf51MZBeFErMvsG8/Oj6",
+    "age": 35,
+    "role": "manager"
+  }
+]
