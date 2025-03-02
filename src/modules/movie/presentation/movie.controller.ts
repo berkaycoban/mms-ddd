@@ -73,6 +73,7 @@ export class MovieController {
   }
 
   @Get()
+  @Roles([UserRole.MANAGER])
   @ApiOkResponse({ type: GetAllMovieResponse })
   @ApiOperation({ summary: 'Get all movies' })
   @HttpCode(HttpStatus.OK)
