@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -63,7 +64,7 @@ export class MovieController {
     summary: 'Create a new movie',
     description: 'Only accessible by MANAGER role.',
   })
-  @ApiOkResponse({ type: Movie })
+  @ApiCreatedResponse({ type: Movie })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @HttpCode(HttpStatus.CREATED)
@@ -97,7 +98,7 @@ export class MovieController {
     summary: 'Create sessions for a movie',
     description: 'Only accessible by MANAGER role.',
   })
-  @ApiOkResponse({ type: Movie })
+  @ApiCreatedResponse({ type: Movie })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @HttpCode(HttpStatus.CREATED)

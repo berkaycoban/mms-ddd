@@ -12,24 +12,24 @@ import { GetUser } from '@/shared/decorators/get-user.decorator';
 import { Roles } from '@/shared/decorators/roles.decorator';
 import { IGetUser, UserRole } from '@/shared/types';
 
-import { BuyTicketDTO } from './dtos/buy-ticket.dto';
-import { BuyTicketUseCase } from '../application/use-cases/buy-ticket.use-case';
-import { Ticket } from '../domain/entities/ticket.entity';
+import { WatchMovieDTO } from './dtos/watch-movie.dto';
+import { WatchMovieUseCase } from '../application/use-cases/watch-movie.use-case';
+import { Watch } from '../domain/entities/watch.entity';
 
 @ApiBearerAuth()
-@ApiTags('tickets')
-@Controller('tickets')
-export class TicketController {
-  constructor(private readonly buyTicketUseCase: BuyTicketUseCase) {}
+@ApiTags('watch')
+@Controller('watch')
+export class WatchController {
+  constructor(private readonly watchMovieUseCase: WatchMovieUseCase) {}
 
   @Post()
   @Roles([UserRole.CUSTOMER])
-  @ApiOperation({ summary: 'Buy a ticket' })
-  @ApiCreatedResponse({ type: Ticket })
+  @ApiOperation({ summary: 'Watch a movie' })
+  @ApiCreatedResponse({ type: Watch })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @HttpCode(HttpStatus.CREATED)
-  create(@GetUser() user: IGetUser, @Body() body: BuyTicketDTO) {
-    return this.buyTicketUseCase.execute({ user, body });
+  create(@GetUser() user: IGetUser, @Body() body: WatchMovieDTO) {
+    return this.watchMovieUseCase.execute({ user, body });
   }
 }

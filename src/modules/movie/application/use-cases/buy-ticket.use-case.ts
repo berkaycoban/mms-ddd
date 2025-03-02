@@ -3,6 +3,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { IGetUser } from '@/shared/types';
 
 import { Ticket } from '../../domain/entities/ticket.entity';
+import { TicketStatus } from '../../domain/interfaces/ticket.interface';
 import { SessionRepository } from '../../domain/repositories/session.repository';
 import { TicketRepository } from '../../domain/repositories/ticket.repository';
 import { BuyTicketDTO } from '../../presentation/dtos/buy-ticket.dto';
@@ -37,6 +38,7 @@ export class BuyTicketUseCase {
       id: '',
       userId: user.id,
       sessionId: session.id,
+      status: TicketStatus.ACTIVE,
     });
 
     const isTicketExists = await this.ticketRepository.isTicketExists(ticket);

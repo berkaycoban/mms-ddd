@@ -33,4 +33,23 @@ export class PrismaTicketRepository implements TicketRepository {
 
     return !!ticket;
   }
+
+  async getById(ticketId: string) {
+    const ticket = await this.prisma.ticket.findUnique({
+      where: { id: ticketId },
+    });
+
+    if (!ticket) {
+      return null;
+    }
+
+    return new Ticket(ticket);
+  }
+
+  async update(ticket: Ticket): Promise<void> {
+    await this.prisma.ticket.update({
+      where: { id: ticket.id },
+      data: ticket,
+    });
+  }
 }

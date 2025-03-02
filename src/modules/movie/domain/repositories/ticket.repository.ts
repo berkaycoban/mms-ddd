@@ -9,4 +9,8 @@ export interface TicketRepository {
     sessionId: string;
     userId: string;
   }): Promise<boolean>;
+
+  getById(ticketId: string): Promise<Ticket | null>;
+
+  update(ticket: Ticket): Promise<void>;
 }

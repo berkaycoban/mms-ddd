@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 
-import { ITicket } from '../interfaces/ticket.interface';
+import { ITicket, TicketStatus } from '../interfaces/ticket.interface';
 
 export class Ticket implements ITicket {
   @Expose()
@@ -11,6 +11,9 @@ export class Ticket implements ITicket {
 
   @Expose()
   userId: string;
+
+  @Expose()
+  status: TicketStatus;
 
   constructor(data: ITicket) {
     Object.assign(this, data);

@@ -9,6 +9,7 @@ Table users {
   age Int [not null]
   role UserRole [not null, default: 'customer']
   Ticket tickets [not null]
+  Watch watches [not null]
 }
 
 Table movies {
@@ -16,6 +17,7 @@ Table movies {
   name String [not null]
   ageRestriction Int [not null]
   Session sessions [not null]
+  Watch watches [not null]
 }
 
 Table sessions {
@@ -25,6 +27,7 @@ Table sessions {
   date DateTime [not null]
   roomNumber Int [not null]
   Ticket tickets [not null]
+  Watch watches [not null]
 
   indexes {
     (date, roomNumber) [unique]
@@ -38,6 +41,19 @@ Table tickets {
   userId String [not null]
   user users [not null]
   status TicketStatus [not null, default: 'active']
+  Watch watches [not null]
+}
+
+Table watches {
+  id String [pk]
+  userId String [not null]
+  user users [not null]
+  ticketId String [unique, not null]
+  ticket tickets [not null]
+  sessionId String [not null]
+  session sessions [not null]
+  movieId String [not null]
+  movie movies [not null]
 }
 
 Enum UserRole {
@@ -55,3 +71,11 @@ Ref: sessions.movieId > movies.id [delete: Cascade]
 Ref: tickets.sessionId > sessions.id [delete: Cascade]
 
 Ref: tickets.userId > users.id [delete: Cascade]
+
+Ref: watches.userId > users.id [delete: Cascade]
+
+Ref: watches.ticketId > tickets.id [delete: Cascade]
+
+Ref: watches.sessionId > sessions.id [delete: Cascade]
+
+Ref: watches.movieId > movies.id [delete: Cascade]

@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { TicketStatus } from '@/modules/movie/domain/interfaces/ticket.interface';
 import { IGetUser, UserRole } from '@/shared/types';
 
 import { Session } from '../../../domain/entities/session.entity';
@@ -60,6 +61,7 @@ describe('BuyTicketUseCase', () => {
       id: 'ticket-uuid',
       userId: 'user-uuid',
       sessionId: 'session-uuid',
+      status: TicketStatus.ACTIVE,
     });
 
     sessionRepository.getById.mockResolvedValue(session);
