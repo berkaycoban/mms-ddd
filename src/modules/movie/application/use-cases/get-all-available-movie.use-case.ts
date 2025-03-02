@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 
+import { IGetUser } from '@/shared/types';
 import { dayjs } from '@/shared/utils';
 
 import { MovieRepository } from '../../domain/repositories/movie.repository';
@@ -15,21 +16,28 @@ export class GetAllAvailableMovie {
     private readonly movieRepository: MovieRepository,
   ) {}
 
-  async execute({ query }: { query: GetAllAvailableQueryDTO }) {
+  async execute({
+    user,
+    query,
+  }: {
+    user: IGetUser;
+    query: GetAllAvailableQueryDTO;
+  }) {
     let queryDate = dayjs(query.date);
 
     if (queryDate.isBefore(dayjs())) {
       queryDate = dayjs(); // if the query date is before today, set it to today
     }
 
-    const filter = {
-      startDate: queryDate.toISOString(),
-      endDate: queryDate.endOf('day').toISOString(),
-    };
-
     const pagination = {
       page: query.page,
       limit: query.limit,
+    };
+
+    const filter = {
+      startDate: queryDate.toISOString(),
+      endDate: queryDate.endOf('day').toISOString(),
+      ageRestriction: user.age,
     };
 
     const { totalCount, items } =

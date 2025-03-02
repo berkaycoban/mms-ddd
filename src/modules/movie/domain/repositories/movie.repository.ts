@@ -14,7 +14,7 @@ export interface MovieRepository {
     filter,
   }: {
     pagination: BasePagination;
-    filter: { startDate: string; endDate: string };
+    filter: { startDate: string; endDate: string; ageRestriction: number };
   }): Promise<{ totalCount: number; items: Movie[] }>;
   getById(id: string): Promise<Movie | null>;
   updateById(id: string, movie: Movie): Promise<Movie>;

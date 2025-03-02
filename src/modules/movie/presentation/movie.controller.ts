@@ -21,8 +21,9 @@ import {
 } from '@nestjs/swagger';
 
 import { GetId } from '@/shared/decorators/get-id.decorator';
+import { GetUser } from '@/shared/decorators/get-user.decorator';
 import { Roles } from '@/shared/decorators/roles.decorator';
-import { UserRole } from '@/shared/types';
+import { IGetUser, UserRole } from '@/shared/types';
 
 import { CreateMovieDTO } from './dtos/create-movie.dto';
 import { CreateSessionDTO } from './dtos/create-session.dto';
@@ -82,8 +83,11 @@ export class MovieController {
   @ApiOkResponse({ type: GetAllMovieResponse })
   @ApiOperation({ summary: 'Get all available movies' })
   @HttpCode(HttpStatus.OK)
-  getAllAvailableMovies(@Query() query: GetAllAvailableQueryDTO) {
-    return this.getAllAvailableMovieUseCase.execute({ query });
+  getAllAvailableMovies(
+    @GetUser() user: IGetUser,
+    @Query() query: GetAllAvailableQueryDTO,
+  ) {
+    return this.getAllAvailableMovieUseCase.execute({ user, query });
   }
 
   @Post(':id/sessions')

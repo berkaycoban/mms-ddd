@@ -54,12 +54,15 @@ export class PrismaMovieRepository implements MovieRepository {
     filter,
   }: {
     pagination: BasePagination;
-    filter: { startDate: string; endDate: string };
+    filter: { startDate: string; endDate: string; ageRestriction: number };
   }): Promise<{
     totalCount: number;
     items: Movie[];
   }> {
     const whereQuery: Prisma.MovieWhereInput = {
+      ageRestriction: {
+        lte: filter.ageRestriction,
+      },
       Session: {
         some: { date: { gte: filter.startDate, lte: filter.endDate } },
       },
