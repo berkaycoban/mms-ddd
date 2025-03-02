@@ -8,4 +8,6 @@ export interface MovieRepository {
     timeSlot: string;
     roomNumber: number;
   }): Promise<boolean>;
+
+  deleteById(id: string): Promise<void>;
 }

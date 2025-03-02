@@ -35,4 +35,4 @@ Enum UserRole {
   customer
 }
 
-Ref: sessions.movieId > movies.id
+Ref: sessions.movieId > movies.id [delete: Cascade]

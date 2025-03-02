@@ -43,7 +43,7 @@ model Session {
   id String @id @default(uuid())
 
   movieId String
-  movie   Movie  @relation(fields: [movieId], references: [id])
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
   date       DateTime @db.Date
   timeSlot   String

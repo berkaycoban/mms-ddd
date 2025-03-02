@@ -50,4 +50,10 @@ export class PrismaMovieRepository implements MovieRepository {
 
     return !!session;
   }
+
+  async deleteById(movieId: string): Promise<void> {
+    await this.prisma.movie.delete({
+      where: { id: movieId },
+    });
+  }
 }

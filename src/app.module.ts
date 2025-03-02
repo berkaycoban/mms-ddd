@@ -12,6 +12,7 @@ import { RolesGuard } from './shared/guards/roles.guard';
 import { ResponseSerializerInterceptor } from './shared/interceptors/response-serializer.interceptor';
 import { JwtModule } from './shared/modules/jwt/jwt.module';
 import { LoggerModule } from './shared/modules/logger/logger.module';
+import { PrismaClientException } from './shared/modules/prisma/prisma-exception.filter';
 import { PrismaModule } from './shared/modules/prisma/prisma.module';
 import { CustomValidationPipe } from './shared/pipes/validation.pipe';
 
@@ -35,6 +36,7 @@ import { CustomValidationPipe } from './shared/pipes/validation.pipe';
     { provide: APP_PIPE, useClass: CustomValidationPipe },
     { provide: APP_FILTER, useClass: AllExceptionFilter },
     { provide: APP_FILTER, useClass: BadRequestExceptionFilter },
+    { provide: APP_FILTER, useClass: PrismaClientException },
     { provide: APP_INTERCEPTOR, useClass: ResponseSerializerInterceptor },
   ],
 })
