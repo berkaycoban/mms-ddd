@@ -4,7 +4,7 @@ import { Session } from '../entities/session.entity';
 
 export interface SessionRepository {
   create(session: Session): Promise<Session>;
-  isSessionTaken(data: { date: Date; roomNumber: number }): Promise<boolean>;
+  isSessionExists(data: { date: Date; roomNumber: number }): Promise<boolean>;
 
   getAll({
     pagination,
@@ -18,4 +18,6 @@ export interface SessionRepository {
       endDate?: string;
     };
   }): Promise<{ totalCount: number; items: Session[] }>;
+
+  getById(id: string): Promise<Session | null>;
 }

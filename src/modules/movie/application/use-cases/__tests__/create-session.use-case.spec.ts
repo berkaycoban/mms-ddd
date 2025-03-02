@@ -22,7 +22,7 @@ describe('CreateSessionUseCase', () => {
   beforeEach(async () => {
     const mockSessionRepository = {
       create: jest.fn(),
-      isSessionTaken: jest.fn(),
+      isSessionExists: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -66,7 +66,7 @@ describe('CreateSessionUseCase', () => {
       };
     });
 
-    sessionRepository.isSessionTaken.mockResolvedValue(false);
+    sessionRepository.isSessionExists.mockResolvedValue(false);
     sessionRepository.create.mockResolvedValue(expectedSession);
 
     const result = await createSessionUseCase.execute({
@@ -101,7 +101,7 @@ describe('CreateSessionUseCase', () => {
     );
   });
 
-  it('should throw BadRequestException if session is already taken', async () => {
+  it('should throw BadRequestException if session is already exists', async () => {
     const movieId = 'movie-uuid';
     const createSessionDto: CreateSessionDTO = {
       date: '2025-03-10',
@@ -109,10 +109,10 @@ describe('CreateSessionUseCase', () => {
       roomNumber: 123,
     };
 
-    sessionRepository.isSessionTaken.mockResolvedValue(true);
+    sessionRepository.isSessionExists.mockResolvedValue(true);
 
     await expect(
       createSessionUseCase.execute({ id: movieId, body: createSessionDto }),
-    ).rejects.toThrow(new BadRequestException('Session is already taken'));
+    ).rejects.toThrow(new BadRequestException('Session is already exists'));
   });
 });

@@ -12,7 +12,7 @@ describe('CreateMovieUseCase', () => {
   beforeEach(async () => {
     const mockMovieRepository = {
       create: jest.fn(),
-      isSessionTaken: jest.fn(),
+      isSessionExists: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

@@ -44,14 +44,14 @@ export class CreateSessionUseCase {
       .set('millisecond', 0)
       .toDate();
 
-    const isSessionTaken = await this.sessionRepository.isSessionTaken({
+    const isSessionExists = await this.sessionRepository.isSessionExists({
       date: newSessionDate,
       roomNumber: body.roomNumber,
     });
 
-    if (isSessionTaken) {
-      this.logger.log('Session is already taken');
-      throw new BadRequestException('Session is already taken');
+    if (isSessionExists) {
+      this.logger.log('Session is already exists');
+      throw new BadRequestException('Session is already exists');
     }
 
     const session = new Session({

@@ -29,7 +29,7 @@ export class PrismaSessionRepository implements SessionRepository {
     return new Session(createdSession);
   }
 
-  async isSessionTaken({
+  async isSessionExists({
     date,
     roomNumber,
   }: {
@@ -68,6 +68,8 @@ export class PrismaSessionRepository implements SessionRepository {
       }),
       this.prisma.session.findMany({
         where: whereQuery,
+        skip: pagination.page * pagination.limit,
+        take: pagination.limit,
       }),
     ]);
 
@@ -78,5 +80,17 @@ export class PrismaSessionRepository implements SessionRepository {
     }
 
     return { items, totalCount };
+  }
+
+  async getById(sessionId: string): Promise<Session | null> {
+    const session = await this.prisma.session.findUnique({
+      where: { id: sessionId },
+    });
+
+    if (!session) {
+      return null;
+    }
+
+    return new Session(session);
   }
 }
