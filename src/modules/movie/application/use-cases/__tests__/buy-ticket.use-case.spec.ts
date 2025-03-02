@@ -55,6 +55,8 @@ describe('BuyTicketUseCase', () => {
       movieId: 'movie-uuid',
       date: new Date('2025-03-10T10:00:00Z'),
       roomNumber: 123,
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     const expectedTicket = new Ticket({
@@ -62,6 +64,8 @@ describe('BuyTicketUseCase', () => {
       userId: 'user-uuid',
       sessionId: 'session-uuid',
       status: TicketStatus.ACTIVE,
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     sessionRepository.getById.mockResolvedValue(session);
@@ -104,6 +108,8 @@ describe('BuyTicketUseCase', () => {
       movieId: 'movie-uuid',
       date: new Date('2020-03-10T10:00:00Z'),
       roomNumber: 123,
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     sessionRepository.getById.mockResolvedValue(session);
@@ -127,6 +133,8 @@ describe('BuyTicketUseCase', () => {
       movieId: 'movie-uuid',
       date: new Date('2025-03-10T10:00:00Z'),
       roomNumber: 123,
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     sessionRepository.getById.mockResolvedValue(session);

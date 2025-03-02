@@ -1,11 +1,10 @@
 import { Expose } from 'class-transformer';
 
+import { BaseEntity } from '@/shared/entities/base.entity';
+
 import { ISession } from '../interfaces/session.interface';
 
-export class Session implements ISession {
-  @Expose()
-  id: string;
-
+export class Session extends BaseEntity<ISession> {
   @Expose()
   date: Date;
 
@@ -15,7 +14,8 @@ export class Session implements ISession {
   @Expose()
   movieId: string;
 
-  constructor(data: ISession) {
+  constructor(data: Omit<Session, 'validate'>) {
+    super(data);
     Object.assign(this, data);
     this.validate();
   }

@@ -1,11 +1,11 @@
+import { TicketStatus as PrismaTicketStatus } from '@prisma/client';
 import { Expose } from 'class-transformer';
+
+import { BaseEntity } from '@/shared/entities/base.entity';
 
 import { ITicket, TicketStatus } from '../interfaces/ticket.interface';
 
-export class Ticket implements ITicket {
-  @Expose()
-  id: string;
-
+export class Ticket extends BaseEntity<ITicket> {
   @Expose()
   sessionId: string;
 
@@ -13,9 +13,10 @@ export class Ticket implements ITicket {
   userId: string;
 
   @Expose()
-  status: TicketStatus;
+  status: TicketStatus | PrismaTicketStatus;
 
-  constructor(data: ITicket) {
+  constructor(data: Ticket) {
+    super(data);
     Object.assign(this, data);
   }
 }

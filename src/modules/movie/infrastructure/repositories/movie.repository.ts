@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '@/shared/modules/prisma/prisma.service';
-import { BasePagination } from '@/shared/types';
+import { BasePagination, IOrderBy } from '@/shared/types';
 
 import { Movie } from '../../domain/entities/movie.entity';
 import { Session } from '../../domain/entities/session.entity';
@@ -20,23 +20,22 @@ export class PrismaMovieRepository implements MovieRepository {
       },
     });
 
-    return new Movie({
-      id: createdMovie.id,
-      name: createdMovie.name,
-      ageRestriction: createdMovie.ageRestriction,
-    });
+    return new Movie(createdMovie);
   }
 
   async getAll({
     pagination,
+    orderBy,
   }: {
     pagination: BasePagination;
+    orderBy: IOrderBy;
   }): Promise<{ totalCount: number; items: Movie[] }> {
     const [totalCount, movies] = await Promise.all([
       this.prisma.movie.count(),
       this.prisma.movie.findMany({
         skip: pagination.page * pagination.limit,
         take: pagination.limit,
+        orderBy,
       }),
     ]);
 

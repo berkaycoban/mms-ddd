@@ -54,6 +54,8 @@ describe('CreateSessionUseCase', () => {
       movieId: 'movie-uuid',
       date: new Date('2025-03-10T10:00:00Z'),
       roomNumber: 123,
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     (dayjs.utc as jest.Mock).mockImplementation(() => {

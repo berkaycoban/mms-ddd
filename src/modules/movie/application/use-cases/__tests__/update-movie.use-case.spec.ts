@@ -43,6 +43,8 @@ describe('UpdateMovieUseCase', () => {
       name: 'Inception',
       ageRestriction: 13,
       sessions: [],
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     const updatedMovie = new Movie({
@@ -50,6 +52,8 @@ describe('UpdateMovieUseCase', () => {
       name: 'Inception Updated',
       ageRestriction: 15,
       sessions: [],
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     const expectedResponse = new UpdateMovieResponseDTO(updatedMovie);

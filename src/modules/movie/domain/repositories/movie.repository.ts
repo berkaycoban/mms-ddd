@@ -1,4 +1,4 @@
-import { BasePagination } from '@/shared/types';
+import { BasePagination, IOrderBy } from '@/shared/types';
 
 import { Movie } from '../entities/movie.entity';
 
@@ -6,8 +6,10 @@ export interface MovieRepository {
   create(movie: Movie): Promise<Movie>;
   getAll({
     pagination,
+    orderBy,
   }: {
     pagination: BasePagination;
+    orderBy: IOrderBy;
   }): Promise<{ totalCount: number; items: Movie[] }>;
   getAllAvailableMovies({
     pagination,

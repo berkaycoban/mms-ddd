@@ -6,6 +6,7 @@ export enum UserRole {
 }
 
 export type IGetUser = UserDTO;
+export type IOrderBy = Record<string, 'asc' | 'desc'>;
 
 export interface BasePagination {
   page: number;

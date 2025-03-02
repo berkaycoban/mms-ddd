@@ -7,6 +7,8 @@ Table users {
   username String [unique, not null]
   password String [not null]
   age Int [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
   role UserRole [not null, default: 'customer']
   Ticket tickets [not null]
   Watch watches [not null]
@@ -16,6 +18,8 @@ Table movies {
   id String [pk]
   name String [not null]
   ageRestriction Int [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
   Session sessions [not null]
   Watch watches [not null]
 }
@@ -26,6 +30,8 @@ Table sessions {
   movie movies [not null]
   date DateTime [not null]
   roomNumber Int [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
   Ticket tickets [not null]
   Watch watches [not null]
 
@@ -40,6 +46,8 @@ Table tickets {
   session sessions [not null]
   userId String [not null]
   user users [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
   status TicketStatus [not null, default: 'active']
   Watch watches [not null]
 }
@@ -54,6 +62,8 @@ Table watches {
   session sessions [not null]
   movieId String [not null]
   movie movies [not null]
+  createdAt DateTime [default: `now()`]
+  updatedAt DateTime [default: `now()`]
 }
 
 Enum UserRole {

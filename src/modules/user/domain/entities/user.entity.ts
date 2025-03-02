@@ -1,13 +1,11 @@
 import { Expose } from 'class-transformer';
 
+import { BaseEntity } from '@/shared/entities/base.entity';
 import { UserRole } from '@/shared/types';
 
 import { IUser } from '../interfaces/user.interface';
 
-export class User implements IUser {
-  @Expose()
-  id: string;
-
+export class User extends BaseEntity<IUser> {
   @Expose()
   username: string;
 
@@ -21,6 +19,7 @@ export class User implements IUser {
   role: UserRole;
 
   constructor(data: Omit<User, 'validate'>) {
+    super(data);
     Object.assign(this, data);
     this.validate();
   }

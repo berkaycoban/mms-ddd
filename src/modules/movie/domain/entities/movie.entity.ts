@@ -1,12 +1,11 @@
 import { Expose } from 'class-transformer';
 
+import { BaseEntity } from '@/shared/entities/base.entity';
+
 import { Session } from './session.entity';
 import { IMovie } from '../interfaces/movie.interface';
 
-export class Movie implements IMovie {
-  @Expose()
-  id: string;
-
+export class Movie extends BaseEntity<IMovie> {
   @Expose()
   name: string;
 
@@ -17,6 +16,7 @@ export class Movie implements IMovie {
   sessions?: Session[];
 
   constructor(data: Omit<Movie, 'validate'>) {
+    super(data);
     Object.assign(this, data);
     this.validate();
   }

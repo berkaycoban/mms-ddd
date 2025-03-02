@@ -40,6 +40,8 @@ describe('CreateMovieUseCase', () => {
       id: 'movie-uuid',
       name: 'Inception',
       ageRestriction: 13,
+      createdAt: new Date('2020-03-09T10:00:00Z'),
+      updatedAt: new Date('2020-03-09T10:00:00Z'),
     });
 
     movieRepository.create.mockResolvedValue(expectedMovie);

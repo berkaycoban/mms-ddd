@@ -22,9 +22,10 @@ import {
 } from '@nestjs/swagger';
 
 import { GetId } from '@/shared/decorators/get-id.decorator';
+import { GetOrderBy } from '@/shared/decorators/get-order-by.decorator';
 import { GetUser } from '@/shared/decorators/get-user.decorator';
 import { Roles } from '@/shared/decorators/roles.decorator';
-import { IGetUser, UserRole } from '@/shared/types';
+import { IGetUser, IOrderBy, UserRole } from '@/shared/types';
 
 import { CreateMovieDTO } from './dtos/create-movie.dto';
 import { CreateSessionDTO } from './dtos/create-session.dto';
@@ -77,8 +78,11 @@ export class MovieController {
   @ApiOkResponse({ type: GetAllMovieResponse })
   @ApiOperation({ summary: 'Get all movies' })
   @HttpCode(HttpStatus.OK)
-  getAllMovies(@Query() query: GetAllMovieQueryDTO) {
-    return this.getAllMovieUseCase.execute({ query });
+  getAllMovies(
+    @Query() query: GetAllMovieQueryDTO,
+    @GetOrderBy() orderBy: IOrderBy,
+  ) {
+    return this.getAllMovieUseCase.execute({ query: { ...query, orderBy } });
   }
 
   @Get('/available')

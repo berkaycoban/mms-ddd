@@ -25,6 +25,7 @@ export class GetAllMovieUseCase {
 
     const { totalCount, items } = await this.movieRepository.getAll({
       pagination,
+      orderBy: query.orderBy,
     });
 
     return new GetAllMovieResponse({
