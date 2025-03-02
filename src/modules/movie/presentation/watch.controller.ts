@@ -1,8 +1,17 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -12,7 +21,10 @@ import { GetUser } from '@/shared/decorators/get-user.decorator';
 import { Roles } from '@/shared/decorators/roles.decorator';
 import { IGetUser, UserRole } from '@/shared/types';
 
+import { GetWatchHistoryQueryDTO } from './dtos/get-watch-history-query.dto';
+import { GetWatchHistoryResponse } from './dtos/get-watch-history.response.dto';
 import { WatchMovieDTO } from './dtos/watch-movie.dto';
+import { GetWatchHistoryUseCase } from '../application/use-cases/get-watch-history.use-case';
 import { WatchMovieUseCase } from '../application/use-cases/watch-movie.use-case';
 import { Watch } from '../domain/entities/watch.entity';
 
@@ -20,7 +32,10 @@ import { Watch } from '../domain/entities/watch.entity';
 @ApiTags('watch')
 @Controller('watch')
 export class WatchController {
-  constructor(private readonly watchMovieUseCase: WatchMovieUseCase) {}
+  constructor(
+    private readonly watchMovieUseCase: WatchMovieUseCase,
+    private readonly getWatchHistoryUseCase: GetWatchHistoryUseCase,
+  ) {}
 
   @Post()
   @Roles([UserRole.CUSTOMER])
@@ -31,5 +46,17 @@ export class WatchController {
   @HttpCode(HttpStatus.CREATED)
   create(@GetUser() user: IGetUser, @Body() body: WatchMovieDTO) {
     return this.watchMovieUseCase.execute({ user, body });
+  }
+
+  @Get()
+  @Roles([UserRole.CUSTOMER])
+  @ApiOperation({ summary: 'Get user watch history' })
+  @ApiOkResponse({ type: GetWatchHistoryResponse })
+  @HttpCode(HttpStatus.OK)
+  getAllMovies(
+    @GetUser() user: IGetUser,
+    @Query() query: GetWatchHistoryQueryDTO,
+  ) {
+    return this.getWatchHistoryUseCase.execute({ user, query });
   }
 }

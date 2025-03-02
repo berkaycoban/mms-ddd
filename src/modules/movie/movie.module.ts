@@ -7,6 +7,7 @@ import { DeleteMovieUseCase } from './application/use-cases/delete-movie.use-cas
 import { GetAllAvailableMovie } from './application/use-cases/get-all-available-movie.use-case';
 import { GetAllMovieUseCase } from './application/use-cases/get-all-movie.use-case';
 import { GetAllSessionUseCase } from './application/use-cases/get-all-session.use-case';
+import { GetWatchHistoryUseCase } from './application/use-cases/get-watch-history.use-case';
 import { UpdateMovieUseCase } from './application/use-cases/update-movie.use-case';
 import { WatchMovieUseCase } from './application/use-cases/watch-movie.use-case';
 import { PrismaMovieRepository } from './infrastructure/repositories/movie.repository';
@@ -37,6 +38,7 @@ import { WatchController } from './presentation/watch.controller';
     BuyTicketUseCase,
 
     WatchMovieUseCase,
+    GetWatchHistoryUseCase,
   ],
 })
 export class MovieModule {}
