@@ -23,7 +23,8 @@ model User {
   password String
   age      Int
 
-  role UserRole @default(customer)
+  role   UserRole @default(customer)
+  Ticket Ticket[]
 
   @@map("users")
 }
@@ -47,7 +48,27 @@ model Session {
 
   date       DateTime
   roomNumber Int
+  Ticket     Ticket[]
 
   @@unique([date, roomNumber]) // for each room and date should be unique
   @@map("sessions")
+}
+
+enum TicketStatus {
+  active
+  used
+}
+
+model Ticket {
+  id String @id @default(uuid())
+
+  sessionId String
+  session   Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status TicketStatus @default(active)
+
+  @@map("tickets")
 }

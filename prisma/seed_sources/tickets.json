@@ -1,0 +1,14 @@
+[
+  {
+    "id": "9a519b5c-cfbe-4257-806c-6d575a7a23e8",
+    "sessionId": "6793c04d-c20c-4c04-8ff1-b5aaf1e35402",
+    "userId": "fcc22f13-29b6-413b-9df2-fa4b79afc8e8",
+    "status": "active"
+  },
+  {
+    "id": "17fd5fda-e498-49ad-a51d-b1a6ffd2080f",
+    "sessionId": "c13c4e3b-37c5-41c5-b7e0-babf6d1f5b64",
+    "userId": "fcc22f13-29b6-413b-9df2-fa4b79afc8e8",
+    "status": "used"
+  }
+]
