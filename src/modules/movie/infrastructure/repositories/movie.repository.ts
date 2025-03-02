@@ -51,6 +51,30 @@ export class PrismaMovieRepository implements MovieRepository {
     return !!session;
   }
 
+  async getById(movieId: string): Promise<Movie | null> {
+    const movie = await this.prisma.movie.findUnique({
+      where: { id: movieId },
+    });
+
+    if (!movie) {
+      return null;
+    }
+
+    return new Movie({ ...movie, sessions: [] });
+  }
+
+  async updateById(movieId: string, movie: Movie): Promise<Movie> {
+    const updatedMovie = await this.prisma.movie.update({
+      where: { id: movieId },
+      data: {
+        name: movie.name,
+        ageRestriction: movie.ageRestriction,
+      },
+    });
+
+    return new Movie({ ...updatedMovie, sessions: [] });
+  }
+
   async deleteById(movieId: string): Promise<void> {
     await this.prisma.movie.delete({
       where: { id: movieId },

@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Put,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -23,8 +24,11 @@ import { UserRole } from '@/shared/types';
 
 import { CreateMovieDTO } from './dtos/create-movie.dto';
 import { DeleteMovieResponseDto } from './dtos/delete-movie.response.dto';
+import { UpdateMovieDTO } from './dtos/update-movie.dto';
+import { UpdateMovieResponseDTO } from './dtos/update-movie.response.dto';
 import { CreateMovieUseCase } from '../application/use-cases/create-movie.use-case';
 import { DeleteMovieUseCase } from '../application/use-cases/delete-movie.use-case';
+import { UpdateMovieUseCase } from '../application/use-cases/update-movie.use-case';
 import { Movie } from '../domain/entities/movie.entity';
 
 @ApiBearerAuth()
@@ -33,6 +37,7 @@ import { Movie } from '../domain/entities/movie.entity';
 export class MovieController {
   constructor(
     private readonly createMovieUseCase: CreateMovieUseCase,
+    private readonly updateMovieUseCase: UpdateMovieUseCase,
     private readonly deleteMovieUseCase: DeleteMovieUseCase,
   ) {}
 
@@ -48,6 +53,19 @@ export class MovieController {
   @HttpCode(HttpStatus.CREATED)
   create(@Body() body: CreateMovieDTO) {
     return this.createMovieUseCase.execute(body);
+  }
+
+  @Put(':id')
+  @Roles([UserRole.MANAGER])
+  @ApiParam({ name: 'id', type: 'string' })
+  @ApiOperation({
+    summary: 'Update a movie',
+    description: 'Only accessible by MANAGER role.',
+  })
+  @ApiOkResponse({ type: UpdateMovieResponseDTO })
+  @HttpCode(HttpStatus.OK)
+  updateById(@GetId() id: string, @Body() body: UpdateMovieDTO) {
+    return this.updateMovieUseCase.execute({ id, body });
   }
 
   @Delete(':id')

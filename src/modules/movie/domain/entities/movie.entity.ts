@@ -29,9 +29,5 @@ export class Movie implements IMovie {
     if (this.ageRestriction < 0 || this.ageRestriction > 24) {
       throw new Error('Invalid age restriction');
     }
-
-    if (this.sessions.length === 0) {
-      throw new Error('Movie must have at least one session');
-    }
   }
 }

@@ -9,5 +9,7 @@ export interface MovieRepository {
     roomNumber: number;
   }): Promise<boolean>;
 
+  getById(id: string): Promise<Movie | null>;
+  updateById(id: string, movie: Movie): Promise<Movie>;
   deleteById(id: string): Promise<void>;
 }
