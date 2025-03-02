@@ -9,6 +9,8 @@ import {
 import { Request } from 'express';
 import { map, Observable } from 'rxjs';
 
+import { UserRole } from '../types';
+
 @Injectable()
 export class ResponseSerializerInterceptor extends ClassSerializerInterceptor {
   intercept(
@@ -38,11 +40,21 @@ export class ResponseSerializerInterceptor extends ClassSerializerInterceptor {
       );
   }
 
-  private getGroups(request: Request): any[] {
-    const groups: any[] = [];
+  private getGroups(request: Request): UserRole[] {
+    const groups: UserRole[] = [];
 
-    // TODO: Implement role based serialization
-    // const user = request.user;
+    const user = request.user;
+    if (!user) {
+      return groups;
+    }
+
+    if (user.role === UserRole.CUSTOMER) {
+      groups.push(UserRole.CUSTOMER);
+    }
+
+    if (user.role === UserRole.MANAGER) {
+      groups.push(UserRole.MANAGER);
+    }
 
     return groups;
   }

@@ -10,6 +10,8 @@ import { REQUEST } from '@nestjs/core';
 import { ClassTransformOptions } from 'class-transformer';
 import { Request } from 'express';
 
+import { UserRole } from '../types';
+
 @Injectable({ scope: Scope.REQUEST })
 export class CustomValidationPipe implements PipeTransform {
   constructor(@Inject(REQUEST) protected readonly request: Request) {}
@@ -52,11 +54,22 @@ export class CustomValidationPipe implements PipeTransform {
     return !types.includes(metatype);
   }
 
-  private getGroups(): any[] {
-    const groups: any[] = [];
+  private getGroups(): UserRole[] {
+    const groups: UserRole[] = [];
 
-    // TODO: Implement role based validation
-    // const user = this.request.user;
+    const user = this.request.user;
+
+    if (!user) {
+      return groups;
+    }
+
+    if (user.role === UserRole.CUSTOMER) {
+      groups.push(UserRole.CUSTOMER);
+    }
+
+    if (user.role === UserRole.MANAGER) {
+      groups.push(UserRole.MANAGER);
+    }
 
     return groups;
   }
