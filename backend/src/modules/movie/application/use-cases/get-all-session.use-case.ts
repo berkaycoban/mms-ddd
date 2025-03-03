@@ -44,6 +44,7 @@ export class GetAllSessionUseCase {
 
     const { totalCount, items } = await this.sessionRepository.getAll({
       pagination: { page: query.page, limit: query.limit },
+      orderBy: query.orderBy,
       filter,
     });
 
