@@ -145,3 +145,9 @@ $ yarn run test:cov
   ```sh
   docker logs CONTAINER_ID
   ```
+
+---
+
+##### Notes
+
+Mock users password: Test123
