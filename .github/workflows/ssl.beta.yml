@@ -1,0 +1,23 @@
+name: BETA SSL Cert Renew
+
+on:
+  schedule:
+    - cron: "0 21 * * 0" # 9pm every Sunday
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Certbot Script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.SSH_BETA_HOST}}
+          port: 22
+          username: ${{secrets.SSH_BETA_USERNAME}}
+          key: ${{secrets.SSH_BETA_KEY}}
+          script: |
+            cd /opt/movie-management-system
+            certbot certonly --webroot -w /opt/movie-management-system/public -d mms-api.berkaycoban.com --email berkaycoban1121@gmail.com --agree-tos --force-renewal -n
+            cp -f /etc/letsencrypt/live/mms-api.berkaycoban.com/privkey.pem /opt/letsencrypt/.
+            cp -f /etc/letsencrypt/live/mms-api.berkaycoban.com/fullchain.pem /opt/letsencrypt/.
+            docker compose -f docker-compose.beta.yml restart gateway

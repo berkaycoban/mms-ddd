@@ -1,0 +1,19 @@
+# Version 2
+FROM node:lts AS build
+
+WORKDIR /srv
+ADD package.json .
+RUN npm install
+
+FROM node:lts-slim
+COPY --from=build /srv /opt/movie-management-system
+
+WORKDIR /opt/movie-management-system
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 1923
+
+CMD ["bash", "-c", "npm run start:prod"]
