@@ -32,12 +32,6 @@ The Movie Management System is a domain-driven designed backend service that man
 
 ---
 
-## Local Project setup
-
-```bash
-yarn install
-```
-
 ## Start PostgreSQL with Docker Compose
 
 ```bash
@@ -46,6 +40,15 @@ $ docker compose up -d --build
 
 # Stop PostgreSQL container
 $ docker compose down
+```
+
+## Install packages
+
+```bash
+$ cd backend
+
+# install packages
+$ yarn install
 ```
 
 ## Apply migrations and Create Prisma Client
