@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '@/shared/modules/prisma/prisma.service';
-import { BasePagination } from '@/shared/types';
+import { BasePagination, IOrderBy } from '@/shared/types';
 
 import { Session } from '../../domain/entities/session.entity';
 import { SessionRepository } from '../../domain/repositories/session.repository';
@@ -46,9 +46,11 @@ export class PrismaSessionRepository implements SessionRepository {
   async getAll({
     pagination,
     filter,
+    orderBy,
   }: {
     pagination: BasePagination;
     filter: { movieId: string; roomNumber?: number; date?: Date };
+    orderBy: IOrderBy;
   }): Promise<{ totalCount: number; items: Session[] }> {
     const whereQuery: Prisma.SessionWhereInput = {
       movieId: filter.movieId,
@@ -70,6 +72,7 @@ export class PrismaSessionRepository implements SessionRepository {
         where: whereQuery,
         skip: pagination.page * pagination.limit,
         take: pagination.limit,
+        orderBy,
       }),
     ]);
 

@@ -77,6 +77,8 @@ export class MovieController {
   @Roles([UserRole.MANAGER])
   @ApiOkResponse({ type: GetAllMovieResponse })
   @ApiOperation({ summary: 'Get all movies' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
   @HttpCode(HttpStatus.OK)
   getAllMovies(
     @Query() query: GetAllMovieQueryDTO,
@@ -119,6 +121,8 @@ export class MovieController {
     description: 'Only accessible by MANAGER role.',
   })
   @ApiOkResponse({ type: GetAllMovieResponse })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
   @HttpCode(HttpStatus.OK)
   getAllSessionByMovieId(
     @GetId() movieId: string,
@@ -135,6 +139,8 @@ export class MovieController {
     description: 'Only accessible by MANAGER role.',
   })
   @ApiOkResponse({ type: UpdateMovieResponseDTO })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
   @HttpCode(HttpStatus.OK)
   updateById(@GetId() id: string, @Body() body: UpdateMovieDTO) {
     return this.updateMovieUseCase.execute({ id, body });

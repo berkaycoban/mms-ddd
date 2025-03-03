@@ -48,12 +48,14 @@ export class WatchController {
     return this.watchMovieUseCase.execute({ user, body });
   }
 
-  @Get()
+  @Get('history')
   @Roles([UserRole.CUSTOMER])
   @ApiOperation({ summary: 'Get user watch history' })
   @ApiOkResponse({ type: GetWatchHistoryResponse })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
   @HttpCode(HttpStatus.OK)
-  getAllMovies(
+  getWatchHistory(
     @GetUser() user: IGetUser,
     @Query() query: GetWatchHistoryQueryDTO,
   ) {
