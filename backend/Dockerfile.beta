@@ -19,4 +19,4 @@ RUN npm run build
 
 EXPOSE 1923
 
-CMD ["bash", "-c", "npm run start:prod"]
+CMD ["bash", "-c", "npm run db:prod && npm run start:prod"]
