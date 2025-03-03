@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '@/shared/modules/prisma/prisma.service';
+import { BasePagination, IOrderBy } from '@/shared/types';
 
 import { Ticket } from '../../domain/entities/ticket.entity';
 import { TicketRepository } from '../../domain/repositories/ticket.repository';
@@ -32,6 +34,40 @@ export class PrismaTicketRepository implements TicketRepository {
     });
 
     return !!ticket;
+  }
+
+  async getAll({
+    pagination,
+    orderBy,
+    filter,
+  }: {
+    pagination: BasePagination;
+    orderBy: IOrderBy;
+    filter: { userId?: string };
+  }): Promise<{ totalCount: number; items: Ticket[] }> {
+    const whereQuery: Prisma.TicketWhereInput = {};
+
+    if (filter.userId) {
+      whereQuery.userId = filter.userId;
+    }
+
+    const [totalCount, tickets] = await Promise.all([
+      this.prisma.ticket.count({ where: whereQuery }),
+      this.prisma.ticket.findMany({
+        where: whereQuery,
+        skip: pagination.page * pagination.limit,
+        take: pagination.limit,
+        orderBy,
+      }),
+    ]);
+
+    const items: Ticket[] = [];
+
+    for (const ticket of tickets) {
+      items.push(new Ticket({ ...ticket }));
+    }
+
+    return { items, totalCount };
   }
 
   async getById(ticketId: string) {

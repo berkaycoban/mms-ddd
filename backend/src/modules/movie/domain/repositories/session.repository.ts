@@ -1,4 +1,4 @@
-import { BasePagination } from '@/shared/types';
+import { BasePagination, IOrderBy } from '@/shared/types';
 
 import { Session } from '../entities/session.entity';
 
@@ -9,6 +9,7 @@ export interface SessionRepository {
   getAll({
     pagination,
     filter,
+    orderBy,
   }: {
     pagination: BasePagination;
     filter: {
@@ -17,6 +18,7 @@ export interface SessionRepository {
       startDate?: string;
       endDate?: string;
     };
+    orderBy: IOrderBy;
   }): Promise<{ totalCount: number; items: Session[] }>;
 
   getById(id: string): Promise<Session | null>;

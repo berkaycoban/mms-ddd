@@ -5,10 +5,10 @@ export class BaseEntity<T> {
   id: string;
 
   @Expose()
-  createdAt?: Date | null;
+  createdAt?: Date | string | null;
 
   @Expose()
-  updatedAt?: Date | null;
+  updatedAt?: Date | string | null;
 
   constructor(props: BaseEntity<T>) {
     Object.assign(this, props);

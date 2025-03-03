@@ -1,35 +1,61 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Movie Management System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[Beta URL](https://mms-api.berkaycoban.com)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Project Overview
 
-## Description
+The Movie Management System is a domain-driven designed backend service that manage movies, sessions, and ticket operations.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Installation
 
-## Project setup
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/berkaycoban/mms-ddd.git
+   cd mms-ddd
+   ```
+
+---
+
+## Configuration
+
+1. **Environment Variables:** Ensure you have the required environment variables set up. Create a `.env` file in the project root directory and add the necessary variables.
+
+   ```env
+   # Example environment variables
+   DB_HOST=your_database_host
+   DB_USER=your_database_user
+   DB_PASSWORD=your_database_password
+   ```
+
+2. **Docker Configuration:** Make sure your Docker configuration files (`docker-compose.{beta}.yml`) are properly set up according to your environment needs.
+
+---
+
+## Start PostgreSQL with Docker Compose
 
 ```bash
+# Start PostgreSQL container
+$ docker compose up -d --build
+
+# Stop PostgreSQL container
+$ docker compose down
+```
+
+## Install packages
+
+```bash
+$ cd backend
+
+# install packages
 $ yarn install
+```
+
+## Apply migrations and Create Prisma Client
+
+```bash
+# prisma migration and deploy
+$ yarn db
 ```
 
 ## Compile and run the project
@@ -58,42 +84,64 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## Deployment
+## Beta Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Connecting to the Server
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+1. Connect to the server via SSH:
 
-```bash
-$ yarn install -g mau
-$ mau deploy
-```
+   ```sh
+   ssh -i path/to/SSH_KEY root@SERVER_IP
+   ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Starting the Project
 
-## Resources
+1. Go to the project folder:
 
-Check out a few resources that may come in handy when working with NestJS:
+   ```sh
+   cd /opt/movie-management-system
+   ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+2. Run the appropriate Docker Compose command:
 
-## Support
+   ```sh
+   docker compose -f docker-compose.beta.yml up -d --build
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## Docker Helpful Commands
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **Remove unused docker data:**
 
-## License
+  ```sh
+  docker system prune -f
+  ```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- **Show logs:**
+
+  ```sh
+  docker logs CONTAINER_ID -f --tail 100
+  ```
+
+- **Show running containers:**
+
+  ```sh
+  docker ps
+  ```
+
+---
+
+## Troubleshooting
+
+- If you encounter issues with Docker, try restarting the Docker service:
+
+  ```sh
+  sudo systemctl restart docker
+  ```
+
+- Check the logs for any errors:
+
+  ```sh
+  docker logs CONTAINER_ID
+  ```
