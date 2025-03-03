@@ -6,7 +6,7 @@ services:
     ports:
       - 127.0.0.1:5432:5432
     env_file:
-      - /opt/movie-management-system/.env.postgres
+      - /opt/movie-management-system-env/.env.postgres
     volumes:
       - /opt/movie-management-system-data:/var/lib/postgresql/data
     logging:
@@ -23,7 +23,7 @@ services:
     ports:
       - 127.0.0.1:8001:1923
     env_file:
-      - /opt/movie-management-system/.env
+      - /opt/movie-management-system-env/.env
     depends_on:
       - database
     logging:
